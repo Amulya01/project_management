@@ -6,7 +6,7 @@
           <v-layout flex align-center justify-center>
             <v-flex xs12 sm4 elevation-6>
               <v-toolbar class="pt-5 blue darken-4">
-                <v-toolbar-title class="white--text"><h4>Welcome Back</h4></v-toolbar-title>
+                <v-toolbar-title class="white--text"><h4>Welcome..</h4></v-toolbar-title>
                 </v-toolbar-items>
               </v-toolbar>
               <v-card>
@@ -30,9 +30,20 @@
                           counter
                           required
                         ></v-text-field>
+                        <v-text-field
+                          label="confirm your password"
+                          v-model="passwordConfirm"
+                          min="8"
+                          :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                          :append-icon-cb="() => (e1 = !e1)"
+                          :type="e1 ? 'password' : 'text'"
+                          :rules="[comparePasswords]"
+                          counter
+                          required
+                        ></v-text-field>
                         <v-layout justify-space-between>
-                            <v-btn @click="submit" :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }">Login</v-btn>
-                            <a href="">Forgot Password</a>
+                            <v-btn @click="userSignUp" :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }">SignUp</v-btn>
+                           
                         </v-layout>
                       </v-form>
                   </div>
@@ -61,6 +72,7 @@ export default {
             valid: false,
             e1: false,
             password: '',
+            passwordConfirm: "",
             passwordRules: [
               (v) => !!v || 'Password is required',
             ],
@@ -72,16 +84,26 @@ export default {
           }
         },
         methods: {
-          submit () {
-             this.$store.dispatch("userSignIn", {
-        email: this.email,
-        password: this.password
-      });
+          userSignUp() {
+            if (this.comparePasswords !== true) {
+            return;
+             }
+            this.$store.dispatch("userSignUp", {
+                email: this.email,
+                 password: this.password
+             });
           },
           clear () {
             this.$refs.form.reset()
           }
         },
+        computed: {
+       comparePasswords() {
+        return this.password === this.passwordConfirm
+        ? true
+        : "Passwords don't match";
+    }
+}
 }
 </script>
 <style scoped>

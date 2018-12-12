@@ -23,7 +23,7 @@
         </v-btn>
         <v-list>
           <v-list-tile
-            v-for="link in links"
+            v-for="link in menuItems"
             :key="link.text"
             router
             :to="link.route"
@@ -33,7 +33,7 @@
         </v-list>
       </v-menu>
 
-      <v-btn flat color="grey">
+      <v-btn v-show="isAuthenticated" @click="userSignOut" flat color="grey">
         <span>Sign Out</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
@@ -56,7 +56,7 @@
       </v-layout>
       <v-list>
         <v-list-tile
-          v-for="link in links"
+          v-for="link in menuItems"
           :key="link.text"
           router
           :to="link.route"
@@ -83,12 +83,32 @@ export default {
     return {
       drawer: false,
       links: [
-        { icon: "dashboard", text: "Dashboard", route: "/" },
+        { icon: "dashboard", text: "Dashboard", route: "/dash" },
         { icon: "folder", text: "My Projects", route: "/projects" },
         { icon: "person", text: "Team", route: "/team" }
       ],
       snackbar: false
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
+    menuItems() {
+      if (this.isAuthenticated) {
+        return this.links;
+      } else {
+        return [
+          { text: "Sign Up", route: "/signup", icon: "face" },
+          { text: "Sign In", route: "/login", icon: "lock_open" }
+        ];
+      }
+    }
+  },
+  methods: {
+    userSignOut() {
+      this.$store.dispatch("userSignOut");
+    }
   }
 };
 </script>

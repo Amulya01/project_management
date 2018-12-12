@@ -32,7 +32,7 @@ export const store = new Vuex.Store({
         .then(firebaseUser => {
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
-          router.push("/home");
+          router.push("/nav");
           commit("setError", null);
         })
         .catch(error => {
@@ -49,7 +49,7 @@ export const store = new Vuex.Store({
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
           commit("setError", null);
-          router.push("/nav");
+          router.push("/projects");
         })
         .catch(error => {
           commit("setError", error.message);
