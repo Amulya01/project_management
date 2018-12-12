@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Dashboard from "./views/Dashboard.vue";
+import dashboard from "./views/Dashboard.vue";
 import Projects from "./views/Projects.vue";
 import Team from "./views/Team.vue";
 import Navbar from "./components/Navbar.vue";
@@ -16,7 +16,7 @@ export default new Router({
     {
       path: "/dash",
       name: "dashboard",
-      component: Dashboard
+      component: dashboard
     },
     {
       path: "/",
@@ -46,7 +46,7 @@ export default new Router({
     {
       path: "/signup",
       name: "signup",
-      component: login
+      component: signup
     },
     {
       path: "/home",
