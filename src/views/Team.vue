@@ -18,7 +18,7 @@
             <v-card-actions>
               <v-btn flat color="grey">
                 <v-icon small left>message</v-icon>
-                <span class="">Message</span>
+                <MessagePop />
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
+import MessagePop from "../components/Messagepop";
 export default {
+  components: { MessagePop },
   data() {
     return {
       team: [

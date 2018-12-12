@@ -3,6 +3,18 @@
     <h1 class="subheading grey--text">Projects</h1>
 
     <v-container class="my-5">
+      <v-card-title>
+        Project List
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+          @keyup="searching"
+        ></v-text-field>
+      </v-card-title>
       <v-expansion-panel>
         <v-expansion-panel-content
           v-for="project in myProjects"
@@ -26,15 +38,23 @@ import db from "@/fb";
 export default {
   data() {
     return {
-      projects: []
+      projects: [],
+      search: ""
     };
   },
   computed: {
     myProjects() {
       return this.projects.filter(project => {
         return (
-          project.person === "The Net Ninja" && project.status != "complete"
+          project.person === "The Net Ninja" &&
+          project.status != "complete" &&
+          project.title.match(this.search)
         );
+      });
+    },
+    searching() {
+      return this.projects.filter(project => {
+        return project.title.match(this.search);
       });
     }
   },
